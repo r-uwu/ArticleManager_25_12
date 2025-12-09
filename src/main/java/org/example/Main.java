@@ -11,11 +11,15 @@ public class Main {
     Scanner sc = new Scanner(System.in);
     int lastArticleId = 0;
     List<Article> articles = new ArrayList<>();
+    List<Member> members = new ArrayList<>();
+    boolean isLoggedIn = false;
+    String userId;
 
     public static void main(String[] args) {
         Main main = new Main();
 
         main.makeTestData();
+        main.makeTestMember();
         main.run();
     }
 
@@ -26,6 +30,13 @@ public class Main {
         articles.add(new Article(2, dateTime(), "test2", "ㅁㄴㅇㄹ"));
         articles.add(new Article(3, dateTime(), "test3", "3333"));
         lastArticleId+=3;
+    }
+
+    private void makeTestMember() {
+        System.out.println("==테스트 멤버 생성==");
+        members.add(new Member("member1", "asdf"));
+        members.add(new Member("member2", "asdf"));
+        members.add(new Member("member3", "asdf"));
     }
 
     public void run() {
@@ -59,11 +70,26 @@ public class Main {
             else if (cmd.startsWith("article delete")||cmd.equals("삭제")) {
                 delete(cmd);
             }
+            else if(cmd.equals("join")){
+                join();
+            }
+
+
+            if(cmd.equals("log in")){
+                logIn();
+            }
+
+
+
+
 
             if (cmd.startsWith("article modify")||cmd.equals("수정")) {
                 modify(cmd);
             }
-            else System.out.println("사용할 수 없는 명령어입니다");
+            else{
+                sc.nextLine();
+                System.out.println("사용할 수 없는 명령어입니다");
+            }
         }
 
         System.out.println("==프로그램 끝==");
@@ -195,6 +221,72 @@ public class Main {
         }
 
     }
+
+    void join(){
+        String memberId;
+
+        while(true) {
+            while(true) {
+                System.out.print("아이디를 입력하세요 : ");
+                memberId = sc.nextLine().trim();
+
+                boolean exists = false;
+
+                for(Member m : members) {
+                    if(m.getMemberId().equals(memberId)) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (exists)
+                    System.out.println("중복되는 ID입니다. 다른 ID를 사용해주세요");
+                else break;
+            }
+
+            System.out.print("비밀번호를 입력하세요 : ");
+            String memberPassword = sc.nextLine().trim();
+
+            System.out.print("아이디를 다시 한번 입력하세요 : ");
+            String tempMemberId = sc.nextLine().trim();
+            System.out.print("비밀번호를 다시 한번 입력하세요 : ");
+            String tempMemberPassword = sc.nextLine().trim();
+
+            if (memberId.equals(tempMemberId) && memberPassword.equals(tempMemberPassword)) {
+                members.add(new Member(memberId, memberPassword));
+                System.out.println("회원 가입이 완료되었습니다.");
+                break;
+            } else {
+                System.out.println("아이디 비밀번호가 맞지 않습니다. 다시 처음부터 가입해 주세요.");
+            }
+        }
+    }
+
+    void logIn()
+    {
+        if(!isLoggedIn) {
+            System.out.print("ID : ");
+            String inputId = sc.nextLine().trim();
+            System.out.print("Password : ");
+            String inputPassword = sc.nextLine().trim();
+
+            for(Member member : members) {
+                if(member.getMemberId().equals(inputId) && member.getMemberPassword().equals(inputPassword)) {
+
+                    System.out.println("로그인 되었습니다");
+                    userId = inputId;
+                    isLoggedIn = true;
+                    break;
+                }
+                else
+                    System.out.println("잘못된 ID, 비밀번호 입니다.");
+            }
+        }
+        else
+        {
+            System.out.println("이미 로그인 상태입니다.");
+        }
+    }
 }
 
 class Article {
@@ -238,4 +330,24 @@ class Article {
         this.body = body;
         this.dateTime = dateTime;
     }
+}
+
+class Member{
+    private String memberId;
+    private String memberPassword;
+    
+    public String getMemberId() {
+        return memberId;
+    }
+    public String getMemberPassword() {
+        return memberPassword;
+    }
+    public void setMemberPassword(String memberPassword) {
+        this.memberPassword = memberPassword;
+    }
+    public Member(String memberId, String memberPassword) {
+        this.memberId = memberId;
+        this.memberPassword = memberPassword;
+    }
+    
 }
