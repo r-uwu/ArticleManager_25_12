@@ -23,22 +23,30 @@ public class ArticleController {
 
     public void write() {
         System.out.println("==게시글 작성==");
-        int id = lastArticleId + 1;
-        System.out.print("제목 : ");
-        String title = sc.nextLine().trim();
-        System.out.print("내용 : ");
-        String body = sc.nextLine().trim();
+        //if(MemberController.getLoggedIn() == false){
+        if(MemberController.getLoggedIn() == null){
+            System.out.println("로그인을 먼저 해주세요.");
+            return;
+        }
+        else {
 
-        Article article = new Article(id, Util.dateTime(), title, body);
-        articles.add(article);
+            int id = lastArticleId + 1;
+            System.out.print("제목 : ");
+            String title = sc.nextLine().trim();
+            System.out.print("내용 : ");
+            String body = sc.nextLine().trim();
 
-        System.out.println(id + "번 글이 작성되었습니다.");
-        lastArticleId++;
+            Article article = new Article(id, Util.dateTime(), title, body);
+            articles.add(article);
+
+            System.out.println(id + "번 글이 작성되었습니다.");
+            lastArticleId++;
+        }
     }
 
     public void list() {
         System.out.println("==게시글 목록==");
-        if (articles.size() == 0) {
+        if (articles.isEmpty()) {
             System.out.println("아무것도 없음");
         } else {
             System.out.println("   번호  /          날짜          /     제목     /   내용  ");

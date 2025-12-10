@@ -52,8 +52,11 @@ public class App {
             else if(cmd.equals("join")){
                 memberController.join();
             }
-            else if(cmd.equals("log in")){
-                memberController.logIn();
+            else if(cmd.equals("login")){
+                memberController.login();
+            }
+            else if(cmd.equals("logout")){
+                memberController.logout();
             }
 
 

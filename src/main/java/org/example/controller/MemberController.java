@@ -12,8 +12,22 @@ public class MemberController {
 
     List<Member> members;
 
+    //private static boolean isLoggedIn = false;
     boolean isLoggedIn = false;
-    String userId;
+    private static String userId = null;
+
+    /*
+    public static boolean getLoggedIn()
+    {
+        return isLoggedIn;
+    }
+
+     */
+    public static String getLoggedIn()
+    {
+        return userId;
+    }
+
 
     public MemberController(Scanner sc) {
         this.sc = sc;
@@ -21,14 +35,12 @@ public class MemberController {
         makeTestMember();
     }
 
-
     private void makeTestMember() {
         System.out.println("==테스트 멤버 생성==");
         members.add(new Member("member1", "asdf"));
         members.add(new Member("member2", "asdf"));
         members.add(new Member("member3", "asdf"));
     }
-
 
     public void join(){
         String memberId;
@@ -70,7 +82,7 @@ public class MemberController {
         }
     }
 
-    public void logIn()
+    public void login()
     {
         if(!isLoggedIn) {
             System.out.print("ID : ");
@@ -94,6 +106,18 @@ public class MemberController {
         else
         {
             System.out.println("이미 로그인 상태입니다.");
+        }
+    }
+
+    public void logout()
+    {
+        if(!isLoggedIn) {
+            System.out.println("이미 로그아웃 상태입니다.");
+        }
+        else {
+            System.out.println("로그아웃 되었습니다.");
+            userId = null;
+            isLoggedIn = false;
         }
     }
 }
