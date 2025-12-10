@@ -5,6 +5,7 @@ public class Article {
     private String title;
     private String body;
     private String dateTime;
+    private String writer;
 
     public int getId() {
         return id;
@@ -34,10 +35,15 @@ public class Article {
         return dateTime;
     }
 
-    public Article(int id, String dateTime, String title, String body) {
+    public Article(int id, String dateTime, String title, String body, String username) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.dateTime = dateTime;
+        this.writer = username;
+    }
+
+    public String getWriter() {
+        return writer;
     }
 }

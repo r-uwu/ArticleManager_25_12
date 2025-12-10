@@ -23,8 +23,20 @@ public class MemberController {
     }
 
      */
+    public static String requireLogin()
+    {
+        //로그인이 됐는지, 누가 로그인했는지
+        if(userId == null)
+            System.out.println("로그인을 먼저 해주세요.");
+
+        return userId;
+
+    }
+
+
     public static String getLoggedIn()
     {
+        //임시 로그인 체크 기능
         return userId;
     }
 
