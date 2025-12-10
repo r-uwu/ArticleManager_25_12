@@ -1,4 +1,4 @@
-package org.example;
+package org.example.dto;
 
 public class Member {
     private String memberId;
@@ -20,5 +20,4 @@ public class Member {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
     }
-
 }

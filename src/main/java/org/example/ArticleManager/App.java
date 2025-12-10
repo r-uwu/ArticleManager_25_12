@@ -1,4 +1,7 @@
-package org.example;
+package org.example.ArticleManager;
+
+import org.example.controller.ArticleController;
+import org.example.controller.MemberController;
 
 import java.util.Scanner;
 
@@ -22,6 +25,8 @@ public class App {
                 continue;
             }
 
+
+            //Article Controller
             if (cmd.equals("article write")||cmd.equals("작성")) {
                 articleController.write();
             }
@@ -32,15 +37,18 @@ public class App {
             {
                 articleController.searchTitle(cmd);
             }
-            else if (cmd.startsWith("article detail")||cmd.equals("보기")) {
+            else if (cmd.startsWith("article detail")) {
                 articleController.details(cmd);
             }
-            else if (cmd.startsWith("article delete")||cmd.equals("삭제")) {
+            else if (cmd.startsWith("article delete")) {
                 articleController.delete(cmd);
+            }
+            else if (cmd.startsWith("article modify")) {
+                articleController.modify(cmd);
             }
 
 
-
+            //Member Controller
             else if(cmd.equals("join")){
                 memberController.join();
             }
@@ -49,10 +57,6 @@ public class App {
             }
 
 
-
-            else if (cmd.startsWith("article modify")||cmd.equals("수정")) {
-                articleController.modify(cmd);
-            }
             else{
                 //sc.nextLine();
                 System.out.println("사용할 수 없는 명령어입니다");

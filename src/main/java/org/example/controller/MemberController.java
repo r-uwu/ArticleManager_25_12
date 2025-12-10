@@ -1,4 +1,6 @@
-package org.example;
+package org.example.controller;
+
+import org.example.dto.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class MemberController {
     }
 
 
-    void join(){
+    public void join(){
         String memberId;
 
         while(true) {
@@ -68,7 +70,7 @@ public class MemberController {
         }
     }
 
-    void logIn()
+    public void logIn()
     {
         if(!isLoggedIn) {
             System.out.print("ID : ");

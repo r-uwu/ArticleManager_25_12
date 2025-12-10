@@ -1,7 +1,8 @@
-package org.example;
+package org.example.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.example.dto.Article;
+import org.example.util.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class ArticleController {
 
     }
 
-    void write() {
+    public void write() {
         System.out.println("==게시글 작성==");
         int id = lastArticleId + 1;
         System.out.print("제목 : ");
@@ -28,14 +29,14 @@ public class ArticleController {
         System.out.print("내용 : ");
         String body = sc.nextLine().trim();
 
-        Article article = new Article(id, dateTime(), title, body);
+        Article article = new Article(id, Util.dateTime(), title, body);
         articles.add(article);
 
         System.out.println(id + "번 글이 작성되었습니다.");
         lastArticleId++;
     }
 
-    void list() {
+    public void list() {
         System.out.println("==게시글 목록==");
         if (articles.size() == 0) {
             System.out.println("아무것도 없음");
@@ -48,18 +49,19 @@ public class ArticleController {
         }
     }
 
-    void details(String cmd) {
+    public void details(String cmd) {
         System.out.println("==게시글 상세보기==");
 
+        String stringPostNumber = cmd.replace("article detail", "").trim();
+
         int id = 0;
-        
+
         try {
-            id = Integer.parseInt(cmd.split(" ")[2]);
+            id = Integer.parseInt(stringPostNumber);
         } catch (NumberFormatException e) {
             System.out.println("형식에 맞게 입력해주세요. article detail + (열람번호)");
+            return;
         }
-        //int id = Integer.parseInt(cmd.replace("article detail", ""));
-
 
         Article foundArticle = null;
 
@@ -72,6 +74,7 @@ public class ArticleController {
 
         if (foundArticle == null) {
             System.out.println("해당 게시글은 없습니다");
+            return;
         }
         System.out.println("번호 : " + foundArticle.getId());
         System.out.println("제목 : " + foundArticle.getTitle());
@@ -79,7 +82,7 @@ public class ArticleController {
 
     }
 
-    void delete(String cmd) {
+    public void delete(String cmd) {
         System.out.println("==게시글 삭제==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -100,7 +103,7 @@ public class ArticleController {
         System.out.println(id + "번 게시글이 삭제되었습니다");
     }
 
-    void modify(String cmd) {
+    public void modify(String cmd) {
         System.out.println("==게시글 수정==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -129,7 +132,7 @@ public class ArticleController {
         System.out.println(id + "번 게시글이 수정되었습니다");
     }
 
-    void searchTitle(String cmd) {
+    public void searchTitle(String cmd) {
         String searchTitle = cmd.replace("article list ","");
         /*
         for(Article article : articles) {
@@ -148,20 +151,13 @@ public class ArticleController {
 
     }
 
-
     private void makeTestData() {
         System.out.println("==테스트 데이터 생성==");
 
-        articles.add(new Article(1, dateTime(), "test1", "asdf"));
-        articles.add(new Article(2, dateTime(), "test2", "ㅁㄴㅇㄹ"));
-        articles.add(new Article(3, dateTime(), "test3", "3333"));
+        articles.add(new Article(1, Util.dateTime(), "test1", "asdf"));
+        articles.add(new Article(2, Util.dateTime(), "test2", "ㅁㄴㅇㄹ"));
+        articles.add(new Article(3, Util.dateTime(), "test3", "3333"));
         lastArticleId+=3;
-    }
-
-    String dateTime() {
-        LocalDateTime now = LocalDateTime.now();
-        String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
-        return date;
     }
 
 }
